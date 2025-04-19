@@ -1,5 +1,6 @@
 const { Client, LocalAuth } = require('whatsapp-web.js');
 const fs = require('fs');
+const path = require('path');
 const qrcode = require('qrcode');
 const { perguntarGemini } = require("./agent");
 
