@@ -22,7 +22,7 @@ async function perguntarGemini(pergunta) {
   try {
     const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
     // Gerando o conteúdo com o prompt
-    const result = await model.generateContent({ prompt: promptBase });
+    const result = await model.generateContent(promptBase);
 
     // Retornando a resposta do modelo
     const response = result.response.text;
