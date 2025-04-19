@@ -1,5 +1,6 @@
 const { Client, LocalAuth } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
+const { perguntarGemini } = require("./agent");
 
 // Cria uma nova instância do cliente WhatsApp com autenticação local
 const client = new Client({
@@ -23,7 +24,7 @@ client.on('message', async (message) => {
     console.log(`Mensagem recebida: ${message.body}`);
     
      // Verifica se a mensagem é de grupo ou individual
-    if (message.isGroupMsg) {
+    if (message.from.includes('@g.us')) {
         console.log('Mensagem de grupo detectada.');
     } else {
         console.log('Mensagem individual detectada.');
@@ -39,7 +40,6 @@ client.on('message', async (message) => {
         // Se houver uma pergunta após "lucy", responda com uma mensagem genérica
         if (pergunta.length > 0) {
             console.log(`Pergunta recebida: ${pergunta}`);
-            const { perguntarGemini } = require("./agent");
             // Aqui você pode integrar um modelo de IA para responder perguntas ou apenas responder algo simples
             const resposta = await perguntarGemini(pergunta);
 
@@ -48,6 +48,20 @@ client.on('message', async (message) => {
         } else {
             // Caso "lucy" seja detectada mas não haja pergunta após
             await message.reply('Oi! Como posso te ajudar?');
+        }
+    }
+    else if(message.hasQuotedMsg){
+        // Verifica se a mensagem original foi enviada pelo bot
+        const quotedMsg = await message.getQuotedMessage();
+    if (quotedMsg.fromMe) {
+        console.log('Usuário respondeu a uma mensagem do bot.');
+
+        const respostaUsuario = message.body.trim().toLowerCase();
+            console.log('Usuário respondeu uma mensagem do bot:', respostaUsuario);
+
+            // Toca pra IA se quiser
+            const resposta = await perguntarGemini(respostaUsuario);
+            await message.reply(resposta || 'Tô sem paciência agora, pergunta outra coisa.');
         }
     }
     else if (message.body.toLowerCase() === "!ajuda") {
