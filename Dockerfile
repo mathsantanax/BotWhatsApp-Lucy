@@ -28,6 +28,7 @@ COPY package*.json ./
 RUN npm install
 RUN npm uninstall qrcode-terminal
 RUN npm install qrcode
+RUN npm install express
 # Copia os arquivos do projeto para o container
 COPY . .
 
