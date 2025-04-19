@@ -15,7 +15,11 @@ if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir);
 }
 
+const app = express();
+app.use(express.static(dir));
+
 const PORT = process.env.PORT || 3000;
+
 app.listen(PORT, () => {
   console.log(`Servidor rodando em http://localhost:${PORT}`);
 });
@@ -25,6 +29,7 @@ client.on('qr', async (qr) => {
     try {
         await qrcode.toFile('./public/qr.png', qr); // Gera imagem
         console.log('QR code salvo como ./public/qr.png');
+        console.log(`Acesse: https://SEU-PROJETO.up.railway.app/qr.png`);
     } catch (err) {
         console.error('Erro ao gerar QR Code:', err);
     }
