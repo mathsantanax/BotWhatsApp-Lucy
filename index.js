@@ -1,15 +1,14 @@
 global.fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
-const { Headers, Request, Response } = require('undici');
 const { Client, LocalAuth } = require('whatsapp-web.js');
 const fs = require('fs');
 const path = require('path');
 const express = require('express');
 const qrcode = require('qrcode');
+global.fetch = fetch;
+global.Headers = (await import('node-fetch')).Headers;
+global.Request = (await import('node-fetch')).Request;
+global.Response = (await import('node-fetch')).Response;
 const { perguntarGemini } = require("./agent");
-
-global.Headers = Headers;
-global.Request = Request;
-global.Response = Response;
 // Cria uma nova instância do cliente WhatsApp com autenticação local
 const client = new Client({
     authStrategy: new LocalAuth(),

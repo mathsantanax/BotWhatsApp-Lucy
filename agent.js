@@ -1,4 +1,10 @@
 require("dotenv").config();
+const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
+global.fetch = fetch;
+global.Headers = (await import('node-fetch')).Headers;
+global.Request = (await import('node-fetch')).Request;
+global.Response = (await import('node-fetch')).Response;
+
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const apiKey = process.env.GEMINI_API_KEY;
 
