@@ -1,13 +1,9 @@
-global.fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 const { Client, LocalAuth } = require('whatsapp-web.js');
 const fs = require('fs');
 const path = require('path');
 const express = require('express');
 const qrcode = require('qrcode');
-global.fetch = fetch;
-global.Headers = (await import('node-fetch')).Headers;
-global.Request = (await import('node-fetch')).Request;
-global.Response = (await import('node-fetch')).Response;
+
 const { perguntarGemini } = require("./agent");
 // Cria uma nova instância do cliente WhatsApp com autenticação local
 const client = new Client({
@@ -26,7 +22,7 @@ app.use(express.static(dir));
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-  console.log(`Servidor rodando em http://localhost:${PORT}`);
+    console.log(`Servidor rodando em http://localhost:${PORT}`);
 });
 
 // Gera o QR Code para escanear no WhatsApp

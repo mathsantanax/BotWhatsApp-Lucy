@@ -1,9 +1,10 @@
 require("dotenv").config();
-const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
+const fetch = require('node-fetch');
+
 global.fetch = fetch;
-global.Headers = (await import('node-fetch')).Headers;
-global.Request = (await import('node-fetch')).Request;
-global.Response = (await import('node-fetch')).Response;
+global.Headers = fetch.Headers;
+global.Request = fetch.Request;
+global.Response = fetch.Response;
 
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const apiKey = process.env.GEMINI_API_KEY;
@@ -31,7 +32,7 @@ async function perguntarGemini(pergunta) {
     const result = await model.generateContent(promptBase);
 
     // Retornando a resposta do modelo
-    const response = result.response.text;
+    const response = await result.response.text();
     return response;
 } catch (error) {
   console.error("❌ Erro ao chamar Gemini:", error.message);
