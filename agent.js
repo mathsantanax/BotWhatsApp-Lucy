@@ -1,7 +1,9 @@
 require("dotenv").config();
 const { GoogleGenerativeAI } = require("@google/generative-ai");
+const apiKey = process.env.GEMINI_API_KEY;
+console.log(apiKey)
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+const genAI = new GoogleGenerativeAI(apiKey);
 
 // Essa função envia a pergunta pra IA e recebe a resposta
 async function perguntarGemini(pergunta) {
