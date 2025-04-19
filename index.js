@@ -16,11 +16,27 @@ const client = new Client({
     puppeteer: { headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox'] }
 });
 
+const dir = path.join(__dirname, 'public');
+if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir);
+}
+
+const app = express();
+app.use(express.static(dir));
+
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`Servidor rodando em http://localhost:${PORT}`);
+});
+
 // Gera o QR Code para escanear no WhatsApp
 client.on('qr', async (qr) => {
     try {
         await qrcode.toFile('./public/qr.png', qr);
         console.log(qr)
+        console.log('QR code salvo como ./public/qr.png');
+        console.log(`Acesse: https://SEU-PROJETO.up.railway.app/qr.png`);
     } catch (err) {
         console.error('Erro ao gerar QR Code:', err);
     }
