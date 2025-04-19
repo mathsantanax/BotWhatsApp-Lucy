@@ -1,5 +1,5 @@
 const { Client, LocalAuth } = require('whatsapp-web.js');
-const qrcode = require('qrcode-terminal');
+const qrcode = require('qrcode');
 const { perguntarGemini } = require("./agent");
 
 // Cria uma nova instância do cliente WhatsApp com autenticação local
@@ -11,14 +11,8 @@ const client = new Client({
 // Gera o QR Code para escanear no WhatsApp
 client.on('qr', async (qr) => {
     try {
-        await qrcode.toFile('qr.png', qr); // Salva o QR como imagem
-        console.log('QR code salvo como qr.png');
-
-        // Se estiver no Railway, você pode usar um serviço de upload
-        // Exemplo: salva no Imgur, S3, ou cria uma rota express pra servir esse arquivo
-        // Mas só pra ver localmente:
-        console.log('Abra o arquivo qr.png localmente e escaneie com o celular.');
-
+        await qrcode.toFile('./public/qr.png', qr); // Gera imagem
+        console.log('QR code salvo como ./public/qr.png');
     } catch (err) {
         console.error('Erro ao gerar QR Code:', err);
     }
