@@ -1,5 +1,5 @@
 require("dotenv").config();
-const fetch = require('node-fetch');
+import fetch, { Headers, Request, Response } from 'node-fetch';
 
 global.fetch = fetch;
 global.Headers = fetch.Headers;

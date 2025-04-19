@@ -29,7 +29,8 @@ RUN npm install
 RUN npm uninstall qrcode-terminal
 RUN npm install qrcode
 RUN npm install express
-RUN npm install node-fetch
+RUN npm uninstall node-fetch
+RUN npm install node-fetch@2
 # Copia os arquivos do projeto para o container
 COPY . .
 
