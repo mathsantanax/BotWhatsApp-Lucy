@@ -5,7 +5,7 @@ const { perguntarGemini } = require("./agent");
 // Cria uma nova instância do cliente WhatsApp com autenticação local
 const client = new Client({
     authStrategy: new LocalAuth(),
-    puppeteer: { headless: true }  // Defina para false se quiser ver o navegador
+    puppeteer: { headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox'] }
 });
 
 // Gera o QR Code para escanear no WhatsApp
