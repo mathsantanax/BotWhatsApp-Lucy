@@ -9,9 +9,19 @@ const client = new Client({
 });
 
 // Gera o QR Code para escanear no WhatsApp
-client.on('qr', (qr) => {
-    qrcode.generate(qr, { small: true });
-    console.log('Escaneie o QR Code para conectar...');
+client.on('qr', async (qr) => {
+    try {
+        await qrcode.toFile('qr.png', qr); // Salva o QR como imagem
+        console.log('QR code salvo como qr.png');
+
+        // Se estiver no Railway, você pode usar um serviço de upload
+        // Exemplo: salva no Imgur, S3, ou cria uma rota express pra servir esse arquivo
+        // Mas só pra ver localmente:
+        console.log('Abra o arquivo qr.png localmente e escaneie com o celular.');
+
+    } catch (err) {
+        console.error('Erro ao gerar QR Code:', err);
+    }
 });
 
 // Quando o cliente estiver pronto, ele irá te informar
