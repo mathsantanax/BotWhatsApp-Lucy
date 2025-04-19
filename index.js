@@ -28,7 +28,8 @@ app.listen(PORT, () => {
 // Gera o QR Code para escanear no WhatsApp
 client.on('qr', async (qr) => {
     try {
-        await qrcode.toFile('./public/qr.png', qr); // Gera imagem
+        await qrcode.toFile('./public/qr.png', qr);
+        console.log(qr)
         console.log('QR code salvo como ./public/qr.png');
         console.log(`Acesse: https://SEU-PROJETO.up.railway.app/qr.png`);
     } catch (err) {
