@@ -1,4 +1,5 @@
 const { Client, LocalAuth } = require('whatsapp-web.js');
+const fs = require('fs');
 const qrcode = require('qrcode');
 const { perguntarGemini } = require("./agent");
 
@@ -7,6 +8,11 @@ const client = new Client({
     authStrategy: new LocalAuth(),
     puppeteer: { headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox'] }
 });
+
+const dir = path.join(__dirname, 'public');
+if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir);
+}
 
 // Gera o QR Code para escanear no WhatsApp
 client.on('qr', async (qr) => {
