@@ -20,8 +20,7 @@ RUN apt-get update && apt-get install -y \
     libxdamage1 \
     libxrandr2 \
     xdg-utils \
-    libgbm-dev \  # Adiciona a biblioteca necessária para o erro libgbm.so.1
-    --no-install-recommends
+    libgbm-dev --no-install-recommends
 
 # Instala o Node.js e Puppeteer
 WORKDIR /app
