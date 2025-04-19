@@ -1,4 +1,5 @@
 global.fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
+const { Headers, Request, Response } = require('undici');
 const { Client, LocalAuth } = require('whatsapp-web.js');
 const fs = require('fs');
 const path = require('path');
@@ -6,24 +7,13 @@ const express = require('express');
 const qrcode = require('qrcode');
 const { perguntarGemini } = require("./agent");
 
+global.Headers = Headers;
+global.Request = Request;
+global.Response = Response;
 // Cria uma nova instância do cliente WhatsApp com autenticação local
 const client = new Client({
     authStrategy: new LocalAuth(),
     puppeteer: { headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox'] }
-});
-
-const dir = path.join(__dirname, 'public');
-if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir);
-}
-
-const app = express();
-app.use(express.static(dir));
-
-const PORT = process.env.PORT || 3000;
-
-app.listen(PORT, () => {
-  console.log(`Servidor rodando em http://localhost:${PORT}`);
 });
 
 // Gera o QR Code para escanear no WhatsApp
@@ -31,8 +21,6 @@ client.on('qr', async (qr) => {
     try {
         await qrcode.toFile('./public/qr.png', qr);
         console.log(qr)
-        console.log('QR code salvo como ./public/qr.png');
-        console.log(`Acesse: https://SEU-PROJETO.up.railway.app/qr.png`);
     } catch (err) {
         console.error('Erro ao gerar QR Code:', err);
     }
