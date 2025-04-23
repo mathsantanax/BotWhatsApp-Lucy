@@ -64,11 +64,7 @@ client.on('message', async (message) => {
         if (pergunta.length > 0) {
             console.log(`Pergunta recebida: ${pergunta}`);
             // Aqui você pode integrar um modelo de IA para responder perguntas ou apenas responder algo simples
-<<<<<<< HEAD
             const resposta = await perguntarGemini(pergunta, message.from);
-=======
-            const resposta = await perguntarGemini(pergunta);
->>>>>>> 4e5194170a3aaa20298eb17e7eb0eca811f388c9
 
             // Aqui você manda de volta no WhatsApp
             client.sendMessage(message.from, resposta);
@@ -87,11 +83,7 @@ client.on('message', async (message) => {
             console.log('Usuário respondeu uma mensagem do bot:', respostaUsuario);
 
             // Toca pra IA se quiser
-<<<<<<< HEAD
             const resposta = await perguntarGemini(respostaUsuario, message.from);
-=======
-            const resposta = await perguntarGemini(respostaUsuario);
->>>>>>> 4e5194170a3aaa20298eb17e7eb0eca811f388c9
             await message.reply(resposta || 'Tô sem paciência agora, pergunta outra coisa.');
         }
     }
