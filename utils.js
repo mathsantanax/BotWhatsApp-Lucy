@@ -1,8 +1,15 @@
-// conversationHistory.js
 const fs = require('fs');
 const path = require('path');
 
 const HISTORY_PATH = path.join(__dirname, 'conversations', 'history.json');
+
+// Garante que o diretório exista
+function ensureDirectoryExists() {
+    const dir = path.dirname(HISTORY_PATH);
+    if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir, { recursive: true });
+    }
+}
 
 function loadHistory(phone) {
     try {
@@ -15,6 +22,8 @@ function loadHistory(phone) {
 }
 
 function saveHistory(phone, userMsg, lucyMsg) {
+    ensureDirectoryExists();  // Garante que o diretório exista
+
     let data = {};
     try {
         const file = fs.readFileSync(HISTORY_PATH, 'utf8');
